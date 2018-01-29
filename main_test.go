@@ -8,10 +8,11 @@ import (
 func TestLoader(t *testing.T) {
 	var tt = []struct {
 		templateName, csvName, expect string
-
-		err error
+		success                       bool
 	}{
-		{"basic.tpl", "basic.csv", "Bond, James Bond", nil},
+		{"basic.tpl", "basic.csv", "Bond, James Bond", true},
+		{"missing.tpl", "basic.csv", "", false},
+		{"basic.tpl", "missing.csv", "", false},
 	}
 	for _, tc := range tt {
 		var buf bytes.Buffer
@@ -19,8 +20,8 @@ func TestLoader(t *testing.T) {
 			"testfiles/"+tc.templateName,
 			"testfiles/"+tc.csvName,
 			&buf)
-		if err != tc.err {
-			t.Fatalf("expected err == %v; got %v", tc.err, err)
+		if (err == nil) != tc.success {
+			t.Fatalf("expected success == %v; got error %v", tc.success, err)
 		}
 		if tc.expect != buf.String() {
 			t.Fatalf("expected result == %q; got %q", tc.expect, buf.String())
