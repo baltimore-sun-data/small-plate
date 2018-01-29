@@ -11,7 +11,7 @@ func TestLoader(t *testing.T) {
 
 		err error
 	}{
-		{"basic.tpl", "basic.csv", "1: 3\n", nil},
+		{"basic.tpl", "basic.csv", "Bond, James Bond", nil},
 	}
 	for _, tc := range tt {
 		var buf bytes.Buffer
