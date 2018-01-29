@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"text/template"
 )
@@ -34,8 +35,17 @@ func parseAndRun(templateName, csvName, outputName string) error {
 	return run(templateName, csvName, output)
 }
 
+var funcMap = map[string]interface{}{
+	"escape": template.HTMLEscapeString,
+}
+
 func run(templateName, csvName string, output io.Writer) error {
-	t, err := template.ParseFiles(templateName)
+	t := template.New(templateName).Funcs(funcMap)
+	contents, err := ioutil.ReadFile(templateName)
+	if err != nil {
+		return err
+	}
+	t, err = t.Parse(string(contents))
 	if err != nil {
 		return err
 	}
