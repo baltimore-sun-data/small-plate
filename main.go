@@ -4,10 +4,10 @@ import (
 	"encoding/csv"
 	"flag"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"os"
-	"text/template"
 )
 
 func main() {
@@ -36,8 +36,8 @@ func parseAndRun(templateName, csvName, outputName string) error {
 }
 
 var funcMap = map[string]interface{}{
-	"escape":  template.HTMLEscapeString,
-	"groupby": groupBy,
+	"unescape": func(s string) template.HTML { return template.HTML(s) },
+	"groupby":  groupBy,
 }
 
 func run(templateName, csvName string, output io.Writer) error {

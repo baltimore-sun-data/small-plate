@@ -13,7 +13,7 @@ func TestLoader(t *testing.T) {
 		{"basic", "basic.tpl", "basic.csv", "Bond, James Bond", true},
 		{"fail1", "missing.tpl", "basic.csv", "", false},
 		{"fail2", "basic.tpl", "missing.csv", "", false},
-		{"escape", "escape.tpl", "escape.csv", "Michael O&#39;Brian", true},
+		{"escape", "escape.tpl", "escape.csv", "Alice &amp; Bob O'Brian", true},
 		{"groupby", "groupby.tpl", "groupby.csv", "Smiths:\n+ John\n+ Michael\nPorters:\n+ Susan\n+ Douglas\n", true},
 	}
 	for _, tc := range tt {
