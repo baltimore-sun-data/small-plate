@@ -36,7 +36,8 @@ func parseAndRun(templateName, csvName, outputName string) error {
 }
 
 var funcMap = map[string]interface{}{
-	"escape": template.HTMLEscapeString,
+	"escape":  template.HTMLEscapeString,
+	"groupby": groupBy,
 }
 
 func run(templateName, csvName string, output io.Writer) error {
@@ -90,4 +91,34 @@ func makeData(r io.Reader) (data []map[string]string, err error) {
 		}
 		data = append(data, datum)
 	}
+}
+
+type object = map[string]string
+type groupedObj = struct {
+	Key   string
+	Items []object
+}
+
+func groupBy(key string, objs []object) []groupedObj {
+	if len(objs) < 1 {
+		return nil
+	}
+
+	var ret []groupedObj
+
+	lastKey := objs[0][key]
+	cur := groupedObj{Key: lastKey, Items: []object{objs[0]}}
+
+	for _, obj := range objs[1:] {
+		if obj[key] == lastKey {
+			cur.Items = append(cur.Items, obj)
+		} else {
+			ret = append(ret, cur)
+			lastKey = obj[key]
+			cur = groupedObj{Key: lastKey, Items: []object{obj}}
+		}
+	}
+	ret = append(ret, cur)
+
+	return ret
 }
