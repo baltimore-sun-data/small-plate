@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/csv"
 	"flag"
 	"fmt"
@@ -14,25 +15,79 @@ func main() {
 	templateName := flag.String("plate", "", "Name of template to use")
 	csvName := flag.String("csv", "", "Name of CSV file to use")
 	outputName := flag.String("output", "", "Name of output file to use (default: standard out)")
+	wrapOutput := flag.Bool("wrap-output", false, "Wraps output in a preview page suitable for display in a web browser")
 	flag.Parse()
 
-	if err := parseAndRun(*templateName, *csvName, *outputName); err != nil {
+	if err := parseAndRun(*templateName, *csvName, *outputName, *wrapOutput); err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v", err)
 		os.Exit(1)
 	}
 }
 
-func parseAndRun(templateName, csvName, outputName string) error {
-	output := os.Stdout
-	var err error
+const wrapperHTML = `
+<html>
+	<head>
+		<title>Small Plate Preview</title>
+		<style>
+			body {
+				padding: 20px;
+				min-width: 100vw;
+				min-height: 100vh;
+				box-sizing: border-box;
+			}
+			textarea, iframe {
+				resize: both;
+				width: 50vw;
+				height: 20vh;
+				overflow: scroll;
+			}
+		</style>
+	</head>
+	<body>
+		<label>
+			<h2>Code:</h2>
+			<textarea id="codebox">{{.}}</textarea>
+			<script>
+			document.getElementById('codebox').addEventListener('focus', function(e) {
+				e.target.setSelectionRange(0, e.target.value.length);
+				if (document.execCommand("copy")) {
+					alert("Copied");
+				}
+			});
+			</script>
+
+		</label>
+		<div>
+			<h2>Preview:</h2>
+			<iframe src="data:text/html,{{.}}">
+		</div>
+	</body>
+</html>
+`
+
+func parseAndRun(templateName, csvName, outputName string, wrapOutput bool) error {
+	var output io.Writer = os.Stdout
 	if outputName != "" && outputName != "-" {
-		output, err = os.Create(outputName)
+		f, err := os.Create(outputName)
 		if err != nil {
 			return err
 		}
+		defer f.Close()
+
+		output = f
 	}
 
-	return run(templateName, csvName, output)
+	if !wrapOutput {
+		return run(templateName, csvName, output)
+	}
+
+	var buf bytes.Buffer
+	if err := run(templateName, csvName, &buf); err != nil {
+		return err
+	}
+
+	wrapper := template.Must(template.New("wrapper").Parse(wrapperHTML))
+	return wrapper.Execute(output, buf.String())
 }
 
 var funcMap = map[string]interface{}{
