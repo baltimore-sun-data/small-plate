@@ -170,8 +170,6 @@
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
@@ -675,8 +673,6 @@
 						<string>4</string>
 					</dict>
 				</dict>
-				<key>conversionLabel</key>
-				<integer>0</integer>
 				<key>isViewVisible</key>
 				<true/>
 				<key>location</key>
@@ -1171,9 +1167,12 @@ end run</string>
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>export APP_PATH=$(cat)
+					<string>APP_PATH=$(cat)
+TMP_FILE=$(mktemp)
 
-"$APP_PATH/Contents/Resources/small-plate" -plate "$(cat /tmp/template-location.txt)" -csv "$(cat /tmp/csv-location.txt)"</string>
+"$APP_PATH/Contents/Resources/small-plate" -plate "$(cat /tmp/template-location.txt)" -csv "$(cat /tmp/csv-location.txt)" -wrap-output -output "$TMP_FILE.html"
+
+open "$TMP_FILE.html"</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -1293,246 +1292,57 @@ end run</string>
 			<key>isViewVisible</key>
 			<true/>
 		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<true/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.attributed-string</string>
-						<string>com.apple.cocoa.string</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>1.2.1</string>
-				<key>AMApplication</key>
-				<array>
-					<string>TextEdit</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict/>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.textedit.document-object</string>
-					</array>
-				</dict>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/New TextEdit Document.action</string>
-				<key>ActionName</key>
-				<string>New TextEdit Document</string>
-				<key>ActionParameters</key>
-				<dict/>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.CreateNewTextEditDocument</string>
-				<key>CFBundleVersion</key>
-				<string>1.2.1</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<true/>
-				<key>CanShowWhenRun</key>
-				<false/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryText</string>
-				</array>
-				<key>Class Name</key>
-				<string>AMNewTextEditDocumentAction</string>
-				<key>InputUUID</key>
-				<string>5DB56F62-8498-4178-A1BA-07A35F1BD7E0</string>
-				<key>Keywords</key>
-				<array>
-					<string>Create</string>
-					<string>Make</string>
-					<string>Document</string>
-					<string>Text</string>
-					<string>New</string>
-					<string>Display</string>
-					<string>Open</string>
-				</array>
-				<key>OutputUUID</key>
-				<string>3DED2B11-5391-4CB2-A443-63699D8EA9E2</string>
-				<key>UUID</key>
-				<string>66A5B059-C04B-491F-A4A5-2D7D06A4E499</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>TextEdit</string>
-				</array>
-				<key>arguments</key>
-				<dict/>
-			</dict>
-		</dict>
-		<dict>
-			<key>action</key>
-			<dict>
-				<key>AMAccepts</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Optional</key>
-					<false/>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.attributed-string</string>
-					</array>
-				</dict>
-				<key>AMActionVersion</key>
-				<string>1.1.1</string>
-				<key>AMApplication</key>
-				<array>
-					<string>TextEdit</string>
-				</array>
-				<key>AMParameterProperties</key>
-				<dict>
-					<key>addMethodIndicator</key>
-					<dict/>
-				</dict>
-				<key>AMProvides</key>
-				<dict>
-					<key>Container</key>
-					<string>List</string>
-					<key>Types</key>
-					<array>
-						<string>com.apple.cocoa.attributed-string</string>
-					</array>
-				</dict>
-				<key>ActionBundlePath</key>
-				<string>/System/Library/Automator/Set Contents of TextEdit Document.action</string>
-				<key>ActionName</key>
-				<string>Set Contents of TextEdit Document</string>
-				<key>ActionParameters</key>
-				<dict>
-					<key>addMethodIndicator</key>
-					<integer>0</integer>
-				</dict>
-				<key>BundleIdentifier</key>
-				<string>com.apple.Automator.SetContentOfTextEditDocument</string>
-				<key>CFBundleVersion</key>
-				<string>1.1.1</string>
-				<key>CanShowSelectedItemsWhenRun</key>
-				<true/>
-				<key>CanShowWhenRun</key>
-				<true/>
-				<key>Category</key>
-				<array>
-					<string>AMCategoryText</string>
-				</array>
-				<key>Class Name</key>
-				<string>AMSetContentsOfTextEditDocumentAction</string>
-				<key>InputUUID</key>
-				<string>9185F152-7271-4B01-903D-C1BB2FDFA7CF</string>
-				<key>Keywords</key>
-				<array>
-					<string>Set</string>
-					<string>Text</string>
-					<string>Document</string>
-				</array>
-				<key>OutputUUID</key>
-				<string>E98E54C1-EE89-472C-AD94-8C8D4CF38B14</string>
-				<key>UUID</key>
-				<string>E5448E3A-3726-41B4-86F2-C5069E70D81F</string>
-				<key>UnlocalizedApplications</key>
-				<array>
-					<string>TextEdit</string>
-				</array>
-				<key>arguments</key>
-				<dict>
-					<key>0</key>
-					<dict>
-						<key>default value</key>
-						<integer>0</integer>
-						<key>name</key>
-						<string>addMethodIndicator</string>
-						<key>required</key>
-						<string>0</string>
-						<key>type</key>
-						<string>0</string>
-						<key>uuid</key>
-						<string>0</string>
-					</dict>
-				</dict>
-				<key>isViewVisible</key>
-				<true/>
-				<key>location</key>
-				<string>309.000000:1740.000000</string>
-				<key>nibPath</key>
-				<string>/System/Library/Automator/Set Contents of TextEdit Document.action/Contents/Resources/Base.lproj/main.nib</string>
-			</dict>
-			<key>isViewVisible</key>
-			<true/>
-		</dict>
 	</array>
 	<key>connectors</key>
 	<dict>
-		<key>389C27A4-753F-480D-8934-5BD99A2A49ED</key>
+		<key>24C834AF-1EF8-4542-93FC-48DB69BEFBB3</key>
 		<dict>
 			<key>from</key>
-			<string>75FE40EB-48A2-4604-B932-D9299026F2C8 - 75FE40EB-48A2-4604-B932-D9299026F2C8</string>
+			<string>7ED08926-5DDD-40F1-A4AC-626FCF030C2F - 7ED08926-5DDD-40F1-A4AC-626FCF030C2F</string>
 			<key>to</key>
-			<string>B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5 - B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5</string>
-		</dict>
-		<key>45E969BE-A08D-47D8-B7F6-6730DA6ECB6F</key>
-		<dict>
-			<key>from</key>
 			<string>B8040650-909B-403B-8101-270847FE2731 - B8040650-909B-403B-8101-270847FE2731</string>
-			<key>to</key>
-			<string>66A5B059-C04B-491F-A4A5-2D7D06A4E499 - 66A5B059-C04B-491F-A4A5-2D7D06A4E499</string>
 		</dict>
-		<key>476747ED-106D-47B1-876D-09779ECA6818</key>
+		<key>63D429A6-9697-4BA8-BF81-A9FA4A1F7DD2</key>
+		<dict>
+			<key>from</key>
+			<string>B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5 - B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5</string>
+			<key>to</key>
+			<string>D203621E-926A-4130-97DF-AC4CC5C41B44 - D203621E-926A-4130-97DF-AC4CC5C41B44</string>
+		</dict>
+		<key>75DBE471-25A7-4BE5-9F91-D1C96E80856C</key>
 		<dict>
 			<key>from</key>
 			<string>D203621E-926A-4130-97DF-AC4CC5C41B44 - D203621E-926A-4130-97DF-AC4CC5C41B44</string>
 			<key>to</key>
 			<string>A22402A5-AFF2-4681-8EC8-9C558730F0F8 - A22402A5-AFF2-4681-8EC8-9C558730F0F8</string>
 		</dict>
-		<key>5CD43535-F6A2-4A35-A56A-1E8F95DE92FA</key>
+		<key>9D6AD1F8-8A76-4A24-AEBF-23B5B66F5627</key>
 		<dict>
 			<key>from</key>
-			<string>66A5B059-C04B-491F-A4A5-2D7D06A4E499 - 66A5B059-C04B-491F-A4A5-2D7D06A4E499</string>
+			<string>A22402A5-AFF2-4681-8EC8-9C558730F0F8 - A22402A5-AFF2-4681-8EC8-9C558730F0F8</string>
 			<key>to</key>
-			<string>E5448E3A-3726-41B4-86F2-C5069E70D81F - E5448E3A-3726-41B4-86F2-C5069E70D81F</string>
+			<string>688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E - 688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E</string>
 		</dict>
-		<key>72B0014C-CEE3-4747-977F-704AA6D3E880</key>
+		<key>B25459E6-20E6-46F8-8742-69B51036AEA4</key>
+		<dict>
+			<key>from</key>
+			<string>688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E - 688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E</string>
+			<key>to</key>
+			<string>7ED08926-5DDD-40F1-A4AC-626FCF030C2F - 7ED08926-5DDD-40F1-A4AC-626FCF030C2F</string>
+		</dict>
+		<key>BD63CC6C-E323-496F-91D9-6DF5E189E0C4</key>
+		<dict>
+			<key>from</key>
+			<string>75FE40EB-48A2-4604-B932-D9299026F2C8 - 75FE40EB-48A2-4604-B932-D9299026F2C8</string>
+			<key>to</key>
+			<string>B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5 - B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5</string>
+		</dict>
+		<key>CD836192-589B-47FE-957C-68A3937F4BA8</key>
 		<dict>
 			<key>from</key>
 			<string>C76A7EFD-E646-46BD-A63B-BAC725E581F2 - C76A7EFD-E646-46BD-A63B-BAC725E581F2</string>
 			<key>to</key>
 			<string>75FE40EB-48A2-4604-B932-D9299026F2C8 - 75FE40EB-48A2-4604-B932-D9299026F2C8</string>
-		</dict>
-		<key>7E842546-D5A2-4830-A11D-54E213154EB4</key>
-		<dict>
-			<key>from</key>
-			<string>B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5 - B65C808C-C1A9-4A90-A0CA-DCCDFFC468F5</string>
-			<key>to</key>
-			<string>D203621E-926A-4130-97DF-AC4CC5C41B44 - D203621E-926A-4130-97DF-AC4CC5C41B44</string>
-		</dict>
-		<key>7FB3F834-7098-42AD-BC59-A094905E424E</key>
-		<dict>
-			<key>from</key>
-			<string>688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E - 688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E</string>
-			<key>to</key>
-			<string>7ED08926-5DDD-40F1-A4AC-626FCF030C2F - 7ED08926-5DDD-40F1-A4AC-626FCF030C2F</string>
-		</dict>
-		<key>A2EB9FB0-A01E-4948-B1C1-156A59E680AD</key>
-		<dict>
-			<key>from</key>
-			<string>7ED08926-5DDD-40F1-A4AC-626FCF030C2F - 7ED08926-5DDD-40F1-A4AC-626FCF030C2F</string>
-			<key>to</key>
-			<string>B8040650-909B-403B-8101-270847FE2731 - B8040650-909B-403B-8101-270847FE2731</string>
-		</dict>
-		<key>DAD34B70-4421-41A5-BFA6-D389D6563E76</key>
-		<dict>
-			<key>from</key>
-			<string>A22402A5-AFF2-4681-8EC8-9C558730F0F8 - A22402A5-AFF2-4681-8EC8-9C558730F0F8</string>
-			<key>to</key>
-			<string>688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E - 688AFE4C-C05E-47EC-94B4-DDCA2EE26C2E</string>
 		</dict>
 	</dict>
 	<key>variables</key>
