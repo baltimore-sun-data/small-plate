@@ -122,6 +122,10 @@ func run(templateName, csvName string, output io.Writer) error {
 
 func makeData(r io.Reader) (data []map[string]string, err error) {
 	cr := csv.NewReader(r)
+	cr.Comment = '#'
+	cr.FieldsPerRecord = -1
+	cr.ReuseRecord = true
+
 	fields, err := cr.Read()
 
 	// Save headers for each row of dict
