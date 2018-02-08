@@ -9,6 +9,9 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strconv"
+
+	"github.com/markbates/inflect"
 )
 
 func main() {
@@ -93,10 +96,11 @@ func parseAndRun(templateName, csvName, outputName string, wrapOutput bool) erro
 var funcMap = map[string]interface{}{
 	"unescape": func(s string) template.HTML { return template.HTML(s) },
 	"groupby":  groupBy,
+	"int":      func(s string) int { i, _ := strconv.Atoi(s); return i },
 }
 
 func run(templateName, csvName string, output io.Writer) error {
-	t := template.New(templateName).Funcs(funcMap)
+	t := template.New(templateName).Funcs(funcMap).Funcs(inflect.Helpers)
 	contents, err := ioutil.ReadFile(templateName)
 	if err != nil {
 		return err

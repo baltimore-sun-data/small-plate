@@ -15,6 +15,7 @@ func TestLoader(t *testing.T) {
 		{"fail2", "basic.tpl", "missing.csv", "", false},
 		{"escape", "escape.tpl", "escape.csv", "Alice &amp; Bob O'Brian", true},
 		{"groupby", "groupby.tpl", "groupby.csv", "Smiths:\n+ John\n+ Michael\nPorters:\n+ Susan\n+ Douglas\n", true},
+		{"pluralize", "pluralize.tpl", "pluralize.csv", "apple\nbananas\ngrapes\n", true},
 	}
 	for _, tc := range tt {
 		t.Run(tc.testName, func(t *testing.T) {
